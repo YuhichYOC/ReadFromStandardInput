@@ -52,6 +52,25 @@ vector<string> ReadOneLine(char delimiter)
     return ret;
 }
 
+// 一行読み込み & 引数のデリミタによる分割
+vector<string> ReadOneLine(char delimiter, bool skipblank)
+{
+    string in;
+    getline(cin, in);
+
+    vector<string> ret;
+    stringstream ss;
+    ss.str(in);
+    string item;
+    while (getline(ss, item, delimiter)) {
+        if (item.length() == 0 && skipblank) {
+            continue;
+        }
+        *(back_inserter(ret)++) = item;
+    }
+    return ret;
+}
+
 void OutOneLine(vector<string> arg)
 {
     string prompt;
@@ -68,7 +87,7 @@ void Test02()
     // 一行 & 複数列 読み込みのテスト
     // 列のデリミタは半角ブランクであること前提
     vector<string> value;
-    value = ReadOneLine((char)32);
+    value = ReadOneLine((char)32, true);
 
     OutOneLine(value);
 }
